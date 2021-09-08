@@ -44,3 +44,12 @@ fun addBalance(userId: Snowflake, cash: Long) {
             .forEach { it.cash += cash }
     }
 }
+
+fun exportDatabaseToSql(): String =
+    "INSERT INTO ${EconomyTable.tableName} (${EconomyTable.userId.name}," +
+            " ${EconomyTable.cash.name}) VALUES " +
+            transaction {
+        EconomyUser.all().joinToString(", ") {
+            "(${it.userId.value}, ${it.cash})"
+        }
+    } + ";"

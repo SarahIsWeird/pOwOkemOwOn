@@ -6,9 +6,10 @@
 | [Argument]  | Argument is not required.      |
 
 ## Administration
-| Commands | Arguments | Description                 |
-| -------- | --------- | --------------------------- |
-| sql      | Text      | Führt einen SQL-Befehl aus. |
+| Commands       | Arguments | Description                                 |
+| -------------- | --------- | ------------------------------------------- |
+| exportDatabase |           | Exportiert die Datenbank in ein SQL-Befehl. |
+| sql            | Text      | Führt einen SQL-Befehl aus.                 |
 
 ## Economy
 | Commands                               | Arguments | Description                                |
