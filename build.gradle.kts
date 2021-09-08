@@ -31,3 +31,27 @@ tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
 }
+
+val fatJar = task("fatJar", type = Jar::class) {
+    archiveBaseName.set("${project.name}-fat")
+    group = "build"
+
+    manifest {
+        attributes["Implementation-Title"] = "pOwOkemOwOn"
+        attributes["Implementation-Version"] = archiveVersion
+        attributes["Main-Class"] = "com.sarahisweird.powokemowon.MainKt"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) })
+
+    with(tasks.jar.get() as CopySpec)
+}
+
+tasks {
+    build {
+        dependsOn(fatJar)
+    }
+}

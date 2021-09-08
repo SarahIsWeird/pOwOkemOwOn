@@ -1,5 +1,6 @@
 package com.sarahisweird.powokemowon.utils
 
+import java.io.InputStream
 import java.net.URL
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -8,7 +9,8 @@ import kotlin.time.ExperimentalTime
 private val validAlphaNumericalCharacters: String =
     ('a'..'z').joinToString("") + ('0'..'9').joinToString("")
 
-fun getResource(path: String): URL? = object {}.javaClass.getResource(path)
+fun String.asResource(): InputStream? =
+    object {}::class.java.getResourceAsStream(this)
 
 fun damerauLevenshtein(str1: String, str2: String): Int {
     val d = Array(str1.length + 1) { Array(str2.length + 1) { 0 } }
