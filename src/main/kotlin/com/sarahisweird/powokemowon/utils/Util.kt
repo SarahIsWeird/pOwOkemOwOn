@@ -2,6 +2,7 @@ package com.sarahisweird.powokemowon.utils
 
 import java.io.InputStream
 import java.net.URL
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -79,4 +80,12 @@ fun Duration.toGermanString(): String {
         parts += "$seconds Sekunde${if (seconds > 1) "n" else ""}"
 
     return parts.joinToString(" ")
+}
+
+fun Long.toSeparatedString(): String {
+    val str = toString()
+
+    return str.mapIndexed { i, c ->
+        if ((str.length - i) % 3 == 0) ".$c" else c.toString()
+    }.joinToString("").removePrefix(".")
 }

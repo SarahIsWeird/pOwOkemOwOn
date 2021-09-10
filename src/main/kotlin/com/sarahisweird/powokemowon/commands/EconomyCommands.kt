@@ -9,12 +9,15 @@ import com.sarahisweird.powokemowon.db.tables.EconomyTable
 import com.sarahisweird.powokemowon.pokemonList
 import com.sarahisweird.powokemowon.utils.addBalance
 import com.sarahisweird.powokemowon.utils.toGermanString
+import com.sarahisweird.powokemowon.utils.toSeparatedString
 import dev.kord.common.entity.Snowflake
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.jakejmattson.discordkt.api.TypeContainer
 import me.jakejmattson.discordkt.api.dsl.CommandEvent
 import me.jakejmattson.discordkt.api.dsl.commands
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.transactions.transaction
 import kotlin.random.Random
 import kotlin.random.nextLong
@@ -163,11 +166,29 @@ fun economyCommands() = commands("Economy") {
         execute {
             val balance = transaction {
                 EconomyUser.find { EconomyTable.userId eq author.id.value }
-                    .first().cash
+                    .first().cash.toSeparatedString()
             }
 
             respond("${getMember()!!.displayName}," +
                     " dein jetziger Kontostand beträgt $balance ₽.")
+        }
+    }
+
+    command("topbalance", "topbal", "balancetop", "baltop", "rangliste", "top") {
+        description = "Zeigt die Nutzer mit dem höchsten Kontostand an."
+
+        execute {
+            channel.type()
+
+            val tops = transaction {
+                EconomyUser.all().orderBy(EconomyTable.cash to SortOrder.DESC)
+                    .limit(10).map { it.userId to it.cash.toSeparatedString() }
+            }.mapIndexed { i, it ->
+                "${if (i + 1 < 10) " " else ""}${i + 1}." +
+                        " ${guild!!.getMember(it.first).displayName}: ${it.second} ₽"
+            }.joinToString("\n")
+
+            respond("Hier ist die Rangliste der Kontostände:\n\n```$tops```")
         }
     }
 }

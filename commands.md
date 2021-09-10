@@ -12,15 +12,16 @@
 | sql            | Text      | Führt einen SQL-Befehl aus.                 |
 
 ## Economy
-| Commands                               | Arguments | Description                                |
-| -------------------------------------- | --------- | ------------------------------------------ |
-| catch                                  |           | Fange wilde Pokemon!                       |
-| daily                                  |           | Einmal pro Tag spendet Feelinara dir Geld! |
-| freerealestate, free, fre              |           | It's free real estate!                     |
-| kontostand, konto, ks, balance, bal, b |           | Zeigt deinen Kontostand an.                |
-| simp                                   |           | Feelinara simpt für dich!                  |
-| test                                   |           | Bist du ein Roboter? :O                    |
-| work                                   |           | Arbeite für Feelinara, du Sklave!          |
+| Commands                                               | Arguments | Description                                      |
+| ------------------------------------------------------ | --------- | ------------------------------------------------ |
+| catch                                                  |           | Fange wilde Pokemon!                             |
+| daily                                                  |           | Einmal pro Tag spendet Feelinara dir Geld!       |
+| freerealestate, free, fre                              |           | It's free real estate!                           |
+| kontostand, konto, ks, balance, bal, b                 |           | Zeigt deinen Kontostand an.                      |
+| simp                                                   |           | Feelinara simpt für dich!                        |
+| test                                                   |           | Bist du ein Roboter? :O                          |
+| topbalance, topbal, balancetop, baltop, rangliste, top |           | Zeigt die Nutzer mit dem höchsten Kontostand an. |
+| work                                                   |           | Arbeite für Feelinara, du Sklave!                |
 
 ## Utility
 | Commands | Arguments | Description          |
