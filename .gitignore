@@ -1,2 +1,7 @@
 /build/
 /.gradle/
+
+# Sonarlint is recognized as PureBasic... why the fuck
+/.idea/sonarlint/
+# Contains tokens
+/.idea/workspace.xml
