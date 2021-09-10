@@ -8,7 +8,7 @@ import me.jakejmattson.discordkt.api.dsl.precondition
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun hasAccount() = precondition {
-    if (command?.name == "sql" || transaction {
+    if (command?.category != "Economy" || transaction {
             !EconomyUser.find { EconomyTable.userId eq author.id.value }.empty()
     }) return@precondition
 
