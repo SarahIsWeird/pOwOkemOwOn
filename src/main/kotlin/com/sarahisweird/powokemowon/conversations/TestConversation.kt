@@ -18,7 +18,7 @@ suspend fun testConversation(member: Member) = conversation {
     val userResponse = prompt(
         AnyArg,
         "Bist du ein Roboter, ${member.displayName}? Tippe diese Zeichen ab! **${sequence.intersperseZWS()}**"
-    )
+    ).lowercase()
 
     if (userResponse != sequence) {
         respond("Du bist also ein Roboter? :O Kein Geld für dich!")
