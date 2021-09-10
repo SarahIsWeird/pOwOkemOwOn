@@ -11,7 +11,9 @@ import com.sarahisweird.powokemowon.utils.addBalance
 import com.sarahisweird.powokemowon.utils.toGermanString
 import com.sarahisweird.powokemowon.utils.toSeparatedString
 import dev.kord.common.entity.Snowflake
-import kotlinx.coroutines.runBlocking
+import dev.kord.core.behavior.requestMembers
+import dev.kord.gateway.PrivilegedIntent
+import kotlinx.coroutines.flow.toList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.jakejmattson.discordkt.api.TypeContainer
@@ -60,6 +62,7 @@ private suspend fun <T : TypeContainer> CommandEvent<T>.timedCommand(
     }
 }
 
+@OptIn(PrivilegedIntent::class)
 fun economyCommands() = commands("Economy") {
     command("catch") {
         description = "Fange wilde Pokemon!"
@@ -180,12 +183,15 @@ fun economyCommands() = commands("Economy") {
         execute {
             channel.type()
 
+            val members = guild!!.requestMembers().toList().flatMap { it.members }
+                .associate { it.id to it.displayName }
+
             val tops = transaction {
                 EconomyUser.all().orderBy(EconomyTable.cash to SortOrder.DESC)
                     .limit(10).map { it.userId to it.cash.toSeparatedString() }
             }.mapIndexed { i, it ->
                 "${if (i + 1 < 10) " " else ""}${i + 1}." +
-                        " ${guild!!.getMember(it.first).displayName}: ${it.second} ₽"
+                        " ${members[it.first]}: ${it.second} ₽"
             }.joinToString("\n")
 
             respond("Hier ist die Rangliste der Kontostände:\n\n```$tops```")

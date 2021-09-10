@@ -5,11 +5,13 @@ import com.sarahisweird.powokemowon.data.PokemonList
 import com.sarahisweird.powokemowon.db.Database
 import com.sarahisweird.powokemowon.utils.asResource
 import dev.kord.common.annotation.KordPreview
+import dev.kord.gateway.Intent
+import dev.kord.gateway.Intents
 import me.jakejmattson.discordkt.api.dsl.bot
 
 var pokemonList: PokemonList? = null
 
-@OptIn(KordPreview::class)
+@OptIn(KordPreview::class, dev.kord.gateway.PrivilegedIntent::class)
 fun main() {
     val token = System.getenv("powokemowon_token")
 
@@ -34,6 +36,7 @@ fun main() {
 
         configure {
             permissions(commandDefault = Permissions.EVERYONE)
+            intents = Intents.nonPrivileged + Intent.GuildMembers
         }
     }
 }
